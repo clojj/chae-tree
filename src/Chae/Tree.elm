@@ -58,6 +58,11 @@ nil =
     []
 
 
+singleton : a -> Tree a
+singleton a =
+    [ Node.Node "" a [] ]
+
+
 {-| Map function over tree
 Similar to `List.map` but working with trees
 -}
@@ -126,6 +131,20 @@ filter fc =
                     acc
     in
         List.foldr sieve []
+
+
+andMap : Tree a -> Tree (a -> b) -> Tree b
+andMap a treeFc =
+    case treeFc of
+        [] ->
+            []
+
+        head :: tail ->
+            let
+                ( _, fc, _ ) =
+                    Node.toTuple head
+            in
+                map fc a
 
 
 {-| Produce new tree with given item pushed under its parent.

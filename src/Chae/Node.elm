@@ -203,6 +203,11 @@ reduce reducer b (Node _ a c) =
     List.foldl (flip (reduce reducer)) (reducer a b) c
 
 
+andMap : Node a -> Node (a -> b) -> Node b
+andMap a (Node _ fc _) =
+    map fc a
+
+
 {-| Find parent node in children by id and push new item to it
 
     n = node "1" 1 [ node "2" 2 [], node "3" 3 [ node "4" 4 []]]
